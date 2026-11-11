@@ -1,432 +1,460 @@
 <!doctype html>
 <html lang="sv">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Bergfelds – Lokal industriförsörjning i Ludvika. Personlig inköpspartner för industri, VVS och verkstad.">
-  <title>Bergfelds – Industriförsörjning i Ludvika</title>
-  <link rel="icon" href="assets/favicon.png" type="image/png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="style.css">
-  <script src="main.js" defer></script>
-</head>
-<body class="home-page">
-  <a class="skip-link" href="#innehall">Hoppa till innehållet</a>
-
-  <!-- ═══ HEADER ═══ -->
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="site-logo" href="index.html" aria-label="Bergfelds startsida">
-        <img src="assets/bergfelds-wordmark.svg" alt="Bergfelds – Din inköpskanal">
-      </a>
-      <nav class="site-nav" aria-label="Huvudmeny">
-        <a href="sortiment.html">Sortiment</a>
-        <a href="sortiment.html#leverantorer">Leverantörer</a>
-        <a href="butiken.html">Butik</a>
-        <a href="kontakta-oss.html">Kontakt</a>
-        <a href="om-bergfelds.html">Om oss</a>
-      </nav>
-      <div class="header-tools">
-        <span class="header-status" data-opening-status>
-          <span class="status-dot"></span>
-          <span class="status-text mono-label">Kontrollerar...</span>
-        </span>
-        <a class="header-phone" href="tel:+46240410210">0240-410 210</a>
-        <a class="btn btn-primary" href="#forfragan">Snabbförfrågan</a>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="index,follow" />
+    <meta
+      name="description"
+      content="Bergfelds i Ludvika hjälper företag med produkter för industri, VVS, verkstad och Mark & VA."
+    />
+    <title>Bergfelds i Ludvika | Industri, VVS och verkstad</title>
+    <link rel="canonical" href="https://samirah90.github.io/Bergfleds-2/" />
+    <meta property="og:locale" content="sv_SE" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Bergfelds" />
+    <meta
+      property="og:title"
+      content="Bergfelds i Ludvika | Industri, VVS och verkstad"
+    />
+    <meta
+      property="og:description"
+      content="Personlig service och ett brett sortiment för industri, VVS, verkstad samt Mark &amp; VA i Ludvika."
+    />
+    <meta
+      property="og:url"
+      content="https://samirah90.github.io/Bergfleds-2/"
+    />
+    <meta
+      property="og:image"
+      content="https://samirah90.github.io/Bergfleds-2/assets/hero.jpg"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="assets/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="main.js" defer></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "HardwareStore",
+        "name": "Bergfelds",
+        "url": "https://samirah90.github.io/Bergfleds-2/",
+        "logo": "https://samirah90.github.io/Bergfleds-2/assets/bergfelds-wordmark.svg",
+        "image": "https://samirah90.github.io/Bergfleds-2/assets/hero.jpg",
+        "telephone": "+46-240-410-210",
+        "email": "order@bergfelds.se",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Gatubacken 9",
+          "postalCode": "771 42",
+          "addressLocality": "Ludvika",
+          "addressCountry": "SE"
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"],
+            "opens": "07:00",
+            "closes": "16:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Friday",
+            "opens": "07:00",
+            "closes": "13:00"
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#innehall">Hoppa till innehållet</a>
+    <div class="topbar">
+      <div class="container">
+        <span>Din inköpskanal i Ludvika · Gatubacken 9</span
+        ><a href="butiken.html">Öppettider: Mån–tors 07–16, fre 07–13</a>
       </div>
-      <button id="menu-btn" aria-label="Öppna meny" aria-expanded="false">☰</button>
     </div>
-  </header>
-
-  <main id="innehall">
-
-    <!-- ═══ HERO ═══ -->
-    <section class="hero">
-      <div class="hero-bg"><img src="assets/bergfelds-original-industry.jpg" alt="Industriprodukter och verkstadsmiljö hos Bergfelds" loading="eager"><div class="hero-bg-grid"></div></div>
-      <div class="container hero-content">
-        <div class="hero-eyebrow">
-          <span class="badge accent">LOKAL INDUSTRIBUTIK I LUDVIKA</span>
-          <span class="hero-rule"></span>
-          <span class="badge">[ID: 559516-9508]</span>
-        </div>
-
-        <h1 class="hero-title" data-reveal>
-          Allt för jobbet.<br>
-          <span class="accent">Nära dig i Ludvika.</span>
-        </h1>
-
-        <p class="hero-sub" data-reveal>
-          Vi hjälper företag och yrkesfolk att hitta rätt produkter inom industri, VVS, verkstad och Mark &amp; VA. Personligt, kunnigt och utan krångel.
-        </p>
-
-        <div class="hero-actions" data-reveal>
-          <a class="btn btn-primary" href="tel:+46240410210">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42C2 2.2 2.95 2 4 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-            Ring oss: 0240-410 210
-          </a>
-          <a class="btn btn-cyan" href="sortiment.html">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-            Se vårt sortiment
-          </a>
-          <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=Gatubacken+9+771+42+Ludvika" target="_blank" rel="noreferrer">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            Hitta till Butiken
-          </a>
-        </div>
-
-        <div class="hero-telemetry" data-reveal>
-          <div class="telemetry-cell">
-            <span class="label">Plats</span>
-            <span class="value">Gatubacken 9, Ludvika</span>
-          </div>
-          <div class="telemetry-cell">
-            <span class="label">Svarstid</span>
-            <span class="value">Personlig kontakt inom minuter</span>
-          </div>
-          <div class="telemetry-cell">
-            <span class="label">Sortiment</span>
-            <span class="value">Industri · VVS · Verkstad · Mark/VA</span>
-          </div>
-          <div class="telemetry-cell">
-            <span class="label">Kunder</span>
-            <span class="value">B2B, Entreprenad &amp; Underhåll</span>
-          </div>
-        </div>
+    <header>
+      <div class="container nav">
+        <a
+          class="logo"
+          href="index.html"
+          aria-label="Bergfelds – till startsidan"
+          ><img
+            class="brand-image"
+            src="assets/bergfelds-wordmark.svg"
+            alt="Bergfelds – Din inköpskanal" /></a
+        ><button id="menu" aria-label="Öppna meny" aria-expanded="false">
+          ☰
+        </button>
+        <nav aria-label="Huvudmeny">
+          <a href="index.html">Startsida</a
+          ><a href="sortiment.html">Sortiment</a
+          ><a href="butiken.html">Butiken</a
+          ><a href="om-bergfelds.html">Om oss</a
+          ><a href="kontakta-oss.html">Kontakt</a>
+        </nav>
+        <a class="phone-link" href="tel:+46240410210"
+          >☎ <strong>0240-410 210</strong></a
+        ><a class="btn call" href="kontakta-oss.html">Skicka förfrågan</a>
       </div>
-    </section>
-
-    <!-- Snabb förfrågan -->
-    <section class="terminal-section" id="forfragan" aria-labelledby="terminal-title">
-      <div class="container">
-        <div class="terminal-wrapper">
-          <div class="terminal-header">
-            <div class="terminal-dots">
-              <span></span><span></span><span></span>
+    </header>
+    <main id="innehall">
+      <section class="flagship-hero">
+        <div class="container flagship-hero-grid">
+          <div class="flagship-copy">
+            <p class="eyebrow">YRKESTBUTIK · GATUBACKEN 9 · LUDVIKA</p>
+            <h1>Välkommen in.<br />Kaffet är på.</h1>
+            <p class="hero-lead">
+              Hos Bergfelds får du produkter för industri, VVS och verkstad –
+              plus människor bakom disken som hjälper dig hitta rätt.
+            </p>
+            <div class="actions">
+              <a class="btn" href="butiken.html">Besök butiken</a>
+              <a class="btn secondary" href="tel:+46240410210"
+                >Ring 0240-410 210</a
+              >
             </div>
-            <span class="terminal-title">BEHÖVER DU HJÄLP ATT HITTA RÄTT?</span>
-          </div>
-
-          <div class="terminal-body">
-            <div class="terminal-step">
-              <p class="step-label">1. Välj vad du söker</p>
-              <div class="segment-pills" role="group" aria-label="Välj område">
-                <button class="pill active" type="button" data-area="Industri &amp; Drift">Industri &amp; Drift</button>
-                <button class="pill" type="button" data-area="VVS &amp; Rör">VVS &amp; Rör</button>
-                <button class="pill" type="button" data-area="Verktyg &amp; Maskin">Verktyg &amp; Maskin</button>
-                <button class="pill" type="button" data-area="Mark &amp; VA">Mark &amp; VA</button>
-                <button class="pill" type="button" data-area="Övrigt">Övrigt</button>
-              </div>
-            </div>
-
-            <div class="terminal-step">
-              <p class="step-label">2. Skriv artikelnummer, dimension eller beskriv vad du behöver</p>
-              <form class="terminal-input" id="terminal-form">
-                <input
-                  type="text"
-                  id="terminal-message"
-                  placeholder="Artikelnr, dimension eller beskrivning av vad du söker..."
-                  autocomplete="off"
-                  required
-                  aria-label="Artikelnummer eller beskrivning"
-                >
-                <button class="send-btn" type="submit">
-                  Skapa förfrågan →
-                </button>
-              </form>
-              <p class="terminal-note">Öppnar ett färdigt mejl till order@bergfelds.se · Ingen data sparas</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══ ASSORTMENT MATRIX ═══ -->
-    <section class="section assortment-section" id="sortimentskarta" aria-labelledby="assortment-title">
-      <div class="container">
-        <div class="section-header" data-reveal>
-          <p class="section-eyebrow">VÅRT SORTIMENT</p>
-          <h2 id="assortment-title">Produkter för hela arbetsdagen.</h2>
-          <p>Från en enstaka koppling till löpande industriförnödenheter. Vi hjälper dig hitta rätt.</p>
-        </div>
-
-        <div class="assortment-grid" data-reveal>
-          <article class="assortment-card">
-            <img class="assortment-image" src="assets/industry.jpg" alt="Industriprodukter och komponenter" loading="lazy">
-            <div class="card-number">01</div>
-            <div class="card-icon" aria-hidden="true">⚙</div>
-            <h3 class="card-title">Industri &amp; Automation</h3>
-            <ul class="card-specs">
-              <li>Kullager (SKF)</li>
-              <li>Mekaniska tätningar</li>
-              <li>Transmissionsremmar</li>
-              <li>Industrismörjmedel</li>
-              <li>Pneumatik</li>
+            <ul class="hero-facts" aria-label="Butiksservice">
+              <li>
+                <strong>Direkt över disk</strong><span>Hämta i butiken</span>
+              </li>
+              <li>
+                <strong>Personlig hjälp</strong><span>Vi kan produkterna</span>
+              </li>
+              <li>
+                <strong>Smidig leverans</strong><span>Fråga om utkörning</span>
+              </li>
             </ul>
-            <a class="card-link" href="kontakta-oss.html?kategori=Industri">
-              Fråga om artiklar i Industri →
-            </a>
-          </article>
-
-          <article class="assortment-card">
-            <img class="assortment-image" src="assets/plumbing.jpg" alt="VVS-delar och rörsystem" loading="lazy">
-            <div class="card-number">02</div>
-            <div class="card-icon" aria-hidden="true">🔧</div>
-            <h3 class="card-title">VVS &amp; Rörsystem</h3>
-            <ul class="card-specs">
-              <li>Industriella rördelar</li>
-              <li>Presskopplingar</li>
-              <li>Flänsar &amp; ventiler</li>
-              <li>Slangmontage</li>
-              <li>Mark &amp; VA-rör</li>
-            </ul>
-            <a class="card-link" href="kontakta-oss.html?kategori=VVS">
-              Fråga om artiklar i VVS →
-            </a>
-          </article>
-
-          <article class="assortment-card">
-            <img class="assortment-image" src="assets/workshop.jpg" alt="Verktyg och maskiner för verkstaden" loading="lazy">
-            <div class="card-number">03</div>
-            <div class="card-icon" aria-hidden="true">🛠</div>
-            <h3 class="card-title">Verktyg &amp; Maskiner</h3>
-            <ul class="card-specs">
-              <li>Handverktyg (Hultafors / Teng)</li>
-              <li>Kap &amp; slip (Tyrolit)</li>
-              <li>Svets (Kemppi / AGA)</li>
-              <li>Infästning (Fischer)</li>
-              <li>Elverktyg (Milwaukee / Bosch)</li>
-            </ul>
-            <a class="card-link" href="kontakta-oss.html?kategori=Verkstad">
-              Fråga om artiklar i Verkstad →
-            </a>
-          </article>
-
-          <article class="assortment-card">
-            <img class="assortment-image" src="assets/editorial/warehouse-logistics.jpg" alt="Mark, VA och förnödenheter" loading="lazy">
-            <div class="card-number">04</div>
-            <div class="card-icon" aria-hidden="true">🏗</div>
-            <h3 class="card-title">Mark, VA &amp; Förnödenheter</h3>
-            <ul class="card-specs">
-              <li>VA-komponenter</li>
-              <li>Arbetsskydd (Ejendals / Guide)</li>
-              <li>Kem &amp; tekniskt (CRC / Loctite)</li>
-              <li>Förbrukningsmaterial</li>
-              <li>El &amp; belysning (Mareld)</li>
-            </ul>
-            <a class="card-link" href="kontakta-oss.html?kategori=Mark+och+VA">
-              Fråga om artiklar i Mark/VA →
-            </a>
-          </article>
-        </div>
-
-        <!-- Category quick-nav map -->
-        <div class="category-map-wrap" data-reveal>
-          <div data-category-map></div>
-        </div>
-        <figure class="range-overview" data-reveal>
-          <img src="assets/bergfelds-product-overview.jpg" alt="Översikt över Bergfelds produktområden" loading="lazy">
-        </figure>
-      </div>
-    </section>
-
-    <!-- ═══ SUPPLIERS ═══ -->
-    <section class="section suppliers-section" id="leverantorer" aria-labelledby="suppliers-title">
-      <div class="container">
-        <div class="section-header" data-reveal>
-          <p class="section-eyebrow">VARUMÄRKEN &amp; LEVERANTÖRER</p>
-          <h2 id="suppliers-title">Bra produkter från varumärken vi litar på.</h2>
-          <p>Filtrera bland varumärken i Bergfelds nätverk.</p>
-        </div>
-
-        <div class="supplier-controls" data-reveal>
-          <div class="supplier-search-wrap">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            <input
-              type="search"
-              class="supplier-search"
-              id="brand-search"
-              placeholder="Filtrera bland varumärken..."
-              aria-label="Sök varumärke"
-            >
           </div>
-          <div class="filter-pills" role="group" aria-label="Filtrera kategori">
-            <button class="filter-pill active" data-filter="all">Alla</button>
-            <button class="filter-pill" data-filter="verktyg">Verktyg</button>
-            <button class="filter-pill" data-filter="industri">Industri/Lager</button>
-            <button class="filter-pill" data-filter="skydd">Skydd &amp; Kläder</button>
-            <button class="filter-pill" data-filter="kem">Kem &amp; Svets</button>
-            <button class="filter-pill" data-filter="svets">Svets &amp; Gas</button>
-          </div>
-        </div>
-
-        <div class="brand-grid" data-brand-grid data-reveal></div>
-
-        <div style="margin-top:24px;text-align:right">
-          <a class="card-link" href="sortiment.html#leverantorer">Se hela leverantörskatalogen →</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══ CONTACT CONSOLE ═══ -->
-    <section class="section local-story" aria-labelledby="local-story-title">
-      <div class="container local-story-grid" data-reveal>
-        <figure class="local-story-photo"><img src="assets/bergfelds-founders.jpg" alt="Janne Bergkvist och Carin Riesenfeld, grundare av Bergfelds" loading="lazy"></figure>
-        <div class="local-story-copy">
-          <p class="section-eyebrow">ETT LOKALT FÖRETAG MED HJÄRTA</p>
-          <h2 id="local-story-title">Personlig service på riktigt.</h2>
-          <p>Bergfelds drivs av Janne Bergkvist och Carin Riesenfeld. Här möter du människor som lyssnar, kan branschen och hjälper dig hela vägen från behov till rätt produkt.</p>
-          <p>Vi bygger företaget tillsammans med våra kunder och leverantörer – i en lagom takt, med service och engagemang i varje affär.</p>
-          <a class="btn btn-primary" href="om-bergfelds.html">Lär känna Bergfelds</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section contact-section" id="kontakt" aria-labelledby="contact-title">
-      <div class="container">
-        <div class="section-header" data-reveal>
-          <p class="section-eyebrow">// DIREKTKONTAKT</p>
-          <h2 id="contact-title">Butik &amp; Kontakt</h2>
-          <p>Ring, mejla eller besök oss. Personlig kontakt direkt på plats.</p>
-        </div>
-
-        <div class="contact-grid" data-reveal>
-          <!-- Left panel: Store -->
-          <div class="contact-panel">
-            <p class="contact-panel-title">// BUTIK &amp; BESÖKSADRESS</p>
-            <img class="store-contact-photo" src="assets/bergfelds-shop-placeholder.png" alt="Bergfelds yrkesbutik och hämtlager i Ludvika" loading="lazy">
-
-            <div class="contact-address-block">
-              <p class="address-line">📍 Gatubacken 9</p>
-              <p class="address-line">771 42 Ludvika, Sverige</p>
-            </div>
-
-            <div class="hours-status" data-opening-status>
+          <div class="flagship-visual">
+            <img
+              src="assets/hero.jpg"
+              alt="Välfylld yrkesbutik med verktyg, maskiner och skyddsutrustning"
+              fetchpriority="high"
+            />
+            <div class="store-status" data-opening-status aria-live="polite">
               <span class="status-dot"></span>
-              <span class="status-text mono-label">Kontrollerar öppettid...</span>
-            </div>
-
-            <dl class="hours-grid">
-              <dt>Mån–Tors</dt><dd>07:00–16:00</dd>
-              <dt>Fredag</dt><dd>07:00–13:00</dd>
-              <dt>Lördag</dt><dd>Stängt</dd>
-              <dt>Söndag</dt><dd>Stängt</dd>
-            </dl>
-
-            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
-              <a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&query=Gatubacken+9+771+42+Ludvika" target="_blank" rel="noreferrer">
-                Hitta hit →
-              </a>
-              <a class="btn btn-ghost" href="butiken.html">Om butiken</a>
-            </div>
-
-            <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border)">
-              <p class="address-line" style="margin-bottom:4px"><strong style="color:var(--text-muted)">Postadress:</strong></p>
-              <p class="address-line">Ågårdsvägen 16, 771 94 Ludvika</p>
+              <span class="status-text">Kontrollerar öppettider…</span>
+              <small>Fri parkering vid dörren</small>
             </div>
           </div>
-
-          <!-- Right panel: Staff -->
-          <div class="contact-panel">
-            <p class="contact-panel-title">// DIREKTKONTAKT — PERSONAL</p>
-
-            <div class="staff-cards">
-              <div class="staff-card">
-                <span class="staff-role">Grundare &amp; Säljare</span>
-                <span class="staff-name">Jan Bergkvist</span>
-                <div class="staff-contact">
-                  <a href="tel:+46240410216">0240-410 216</a>
-                  <a href="mailto:jan@bergfelds.se">jan@bergfelds.se</a>
-                </div>
-              </div>
-
-              <div class="staff-card">
-                <span class="staff-role">Grundare &amp; Säljare</span>
-                <span class="staff-name">Carin Riesenfeld</span>
-                <div class="staff-contact">
-                  <a href="tel:+46240410217">0240-410 217</a>
-                  <a href="mailto:carin@bergfelds.se">carin@bergfelds.se</a>
-                </div>
-              </div>
-            </div>
-
-            <div class="order-desk">
-              <span class="label">// ORDER &amp; FÖRFRÅGAN — VÄXEL</span>
-              <a href="tel:+46240410210">0240-410 210</a>
-              <a href="mailto:order@bergfelds.se">order@bergfelds.se</a>
-              <p style="margin-top:10px;font-family:var(--font-mono);font-size:10px;color:var(--text-dim)">
-                Etablerat 2025 i Ludvika. Ring eller mejla direkt till oss på plats.
+        </div>
+      </section>
+      <section class="section product-intro">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <h2>Produkter för din verksamhet</h2>
+              <p>
+                Vi hjälper dig med produkter och lösningar inom flera områden.
+                Hittar du inte det du söker? Kontakta oss så undersöker vi
+                möjligheterna.
               </p>
             </div>
-
-            <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">
-              <span class="badge">[ORG: 559516-9508]</span>
-              <span class="badge accent">[GRUNDAT: 2025]</span>
+            <a href="sortiment.html">Se hela vårt sortiment →</a>
+          </div>
+          <div class="product-bento">
+            <article class="product-tile product-tile-wide">
+              <img
+                src="assets/industry.jpg"
+                alt="Industrikomponenter i metall"
+                loading="lazy"
+              />
+              <div class="product-overlay">
+                <span class="product-tag">SKF · Kullager · Tätningar</span>
+                <h3>Industri</h3>
+                <p>
+                  Komponenter, underhåll och förbrukning för en produktion som
+                  ska rulla.
+                </p>
+                <a href="kontakta-oss.html?kategori=Industri"
+                  >Fråga butiken <span aria-hidden="true">→</span></a
+                >
+              </div>
+            </article>
+            <article class="product-tile">
+              <img
+                src="assets/plumbing.jpg"
+                alt="Rör och kopplingar i koppar och mässing"
+                loading="lazy"
+              />
+              <div class="product-overlay">
+                <span class="product-tag">Rör · Kopplingar · Ventiler</span>
+                <h3>VVS</h3>
+                <a href="kontakta-oss.html?kategori=VVS"
+                  >Fråga butiken <span aria-hidden="true">→</span></a
+                >
+              </div>
+            </article>
+            <article class="product-tile">
+              <img
+                src="assets/workshop.jpg"
+                alt="Verktyg och maskiner för yrkesbruk"
+                loading="lazy"
+              />
+              <div class="product-overlay">
+                <span class="product-tag">Milwaukee · Bosch · Hultafors</span>
+                <h3>Verkstad</h3>
+                <a href="kontakta-oss.html?kategori=Verkstad"
+                  >Fråga butiken <span aria-hidden="true">→</span></a
+                >
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section class="section muted-section">
+        <div class="container">
+          <h2>Mer än bara produkter.</h2>
+          <p class="lead">
+            Vi vill vara en trygg och personlig inköpspartner för ditt företag.
+          </p>
+          <div class="benefit-row">
+            <article>
+              <span>◎</span>
+              <h3>Personlig service</h3>
+              <p>
+                Hos oss får du hjälp av människor som tar sig tid att förstå
+                dina behov.
+              </p>
+            </article>
+            <article>
+              <span>◇</span>
+              <h3>Brett kontaktnät</h3>
+              <p>
+                Vi hjälper dig hitta rätt och undersöker möjligheten att ta hem
+                det du söker.
+              </p>
+            </article>
+            <article>
+              <span>▤</span>
+              <h3>Kunskap & kvalitet</h3>
+              <p>
+                Produktkunskap, kvalitet och långsiktiga relationer står i
+                centrum.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section class="section counter-section">
+        <div class="container counter-grid">
+          <div class="counter-photo">
+            <img
+              src="assets/bergfelds-founders.jpg"
+              alt="Janne Bergkvist och Carin Riesenfeld på Bergfelds"
+              loading="lazy"
+            />
+          </div>
+          <div class="counter-copy">
+            <p class="eyebrow">MÄNNISKORNA BAKOM DISKEN</p>
+            <h2>Vi har koll på prylarna.</h2>
+            <p class="lead">
+              Janne och Carin hjälper dig från första fråga till rätt produkt.
+              Ta med en gammal del, ett artikelnummer eller bara problemet – vi
+              börjar där.
+            </p>
+            <div class="counter-contacts">
+              <a href="tel:+46240410216">
+                <span>Janne Bergkvist</span>
+                <strong>0240-410 216</strong>
+              </a>
+              <a href="tel:+46240410217">
+                <span>Carin Riesenfeld</span>
+                <strong>0240-410 217</strong>
+              </a>
+            </div>
+            <a class="text-link" href="kontakta-oss.html"
+              >Alla kontaktvägar →</a
+            >
+          </div>
+        </div>
+      </section>
+      <section class="section process">
+        <div class="container">
+          <h2>Enkelt att handla hos oss.</h2>
+          <ol class="steps">
+            <li>
+              <span>01</span>
+              <h3>Berätta vad du behöver</h3>
+              <p>
+                Ring, mejla eller skicka en förfrågan med information om
+                produkten.
+              </p>
+            </li>
+            <li>
+              <span>02</span>
+              <h3>Vi hjälper dig hitta rätt</h3>
+              <p>
+                Vi går igenom ditt behov och hjälper dig med lämpliga
+                alternativ.
+              </p>
+            </li>
+            <li>
+              <span>03</span>
+              <h3>Beställ via Bergfelds</h3>
+              <p>Vi hjälper dig vidare med beställning och tillgänglighet.</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+      <section class="marquee-section">
+        <div class="container supplier-heading">
+          <div>
+            <h2>Över 30 leverantörer i sortimentet</h2>
+            <a class="all-suppliers-link" href="sortiment.html#leverantorer"
+              >Alla leverantörer →</a
+            >
+          </div>
+        </div>
+        <div class="supplier-marquee" aria-label="Leverantörer">
+          <div class="supplier-track"></div>
+        </div>
+      </section>
+      <section class="section muted-section visit-section">
+        <div class="container visit-grid">
+          <div>
+            <h2>Välkommen till Bergfelds i Ludvika.</h2>
+            <p class="lead">
+              Kom förbi med din beställning eller förfrågan – eller hör av dig
+              via telefon och mejl.
+            </p>
+            <div class="visit-details">
+              <div>
+                <p><b>Besöksadress</b><br />Gatubacken 9, 771 42 Ludvika</p>
+                <p>
+                  <b>Telefon</b><br /><a href="tel:+46240410210"
+                    >0240-410 210</a
+                  >
+                </p>
+                <p>
+                  <b>E-post</b><br /><a href="mailto:order@bergfelds.se"
+                    >order@bergfelds.se</a
+                  >
+                </p>
+              </div>
+              <div>
+                <h3>Öppettider</h3>
+                <dl>
+                  <div>
+                    <dt>Måndag–torsdag</dt>
+                    <dd>07:00–16:00</dd>
+                  </div>
+                  <div>
+                    <dt>Fredag</dt>
+                    <dd>07:00–13:00</dd>
+                  </div>
+                  <div>
+                    <dt>Lördag–söndag</dt>
+                    <dd>Stängt</dd>
+                  </div>
+                </dl>
+              </div>
+            </div>
+            <div class="info-note">
+              <b>På gång:</b> Vi planerar att flytta till större lokaler på
+              Lyviksberget. Tills vidare finns vi på Gatubacken 9.
+            </div>
+            <div class="actions">
+              <a
+                class="btn"
+                target="_blank"
+                rel="noreferrer"
+                href="https://www.google.com/maps/search/?api=1&query=Gatubacken+9+771+42+Ludvika"
+                >Vägbeskrivning</a
+              ><a class="btn secondary" href="butiken.html">Mer om butiken</a>
             </div>
           </div>
+          <img
+            class="visit-photo"
+            src="assets/bergfelds-shop-placeholder.png"
+            alt="Bergfelds butik i Ludvika"
+          />
         </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- ═══ MOBILE DOCK ═══ -->
-  <div class="mobile-dock" aria-label="Snabbkontakt">
-    <a href="tel:+46240410210">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42C2 2.2 2.95 2 4 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-      Ring 0240-410 210
-    </a>
-    <a href="https://www.google.com/maps/search/?api=1&query=Gatubacken+9+771+42+Ludvika" target="_blank" rel="noreferrer">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-      Karta / Hitta hit
-    </a>
-  </div>
-
-  <!-- ═══ FOOTER ═══ -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <img class="footer-real-logo" src="assets/bergfelds-wordmark.svg" alt="Bergfelds – Din inköpskanal">
-          <p class="footer-tagline">Din personliga inköpskanal<br>för industri, VVS och verkstad<br>i Ludvika och Dalarna.</p>
-          <div style="margin-top:20px;display:flex;gap:8px;flex-wrap:wrap">
-            <span class="badge">LUDVIKA</span>
-            <span class="badge accent">DEN PERSONLIGA GROSSISTEN</span>
+      </section>
+      <section class="final-cta">
+        <div class="container">
+          <div>
+            <h2>Hittar du inte det du söker?</h2>
+            <p>
+              Kontakta oss och berätta vad du behöver. Vi hjälper dig gärna att
+              hitta rätt produkt eller lösning.
+            </p>
+          </div>
+          <div class="actions">
+            <a class="btn light" href="kontakta-oss.html">Skicka förfrågan</a
+            ><a class="btn outline" href="tel:+46240410210"
+              >Ring 0240-410 210</a
+            >
           </div>
         </div>
-        <div class="footer-col">
-          <h4>Navigation</h4>
-          <a href="index.html">Startsida</a>
-          <a href="sortiment.html">Sortiment</a>
-          <a href="butiken.html">Butiken</a>
-          <a href="om-bergfelds.html">Om Bergfelds</a>
-          <a href="du-som-kund.html">Du som kund</a>
-          <a href="kontakta-oss.html">Kontakta oss</a>
+      </section>
+    </main>
+    <footer>
+      <div class="container footer4">
+        <div>
+          <a class="logo" href="index.html"
+            ><img
+              class="brand-image footer-brand"
+              src="assets/bergfelds-wordmark.svg"
+              alt="Bergfelds"
+          /></a>
+          <p>Din inköpskanal i Ludvika.</p>
+          <nav class="social-links" aria-label="Sociala medier">
+            <a
+              href="https://www.linkedin.com/company/bergfeld-f%C3%B6rs%C3%A4ljning-ab/posts/?feedView=all"
+              target="_blank"
+              rel="noopener noreferrer"
+              >LinkedIn</a
+            >
+            <a
+              href="https://www.facebook.com/profile.php?id=61582548335301"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Facebook</a
+            >
+            <a
+              href="https://www.instagram.com/bergfeldsab/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Instagram</a
+            >
+          </nav>
         </div>
-        <div class="footer-col">
-          <h4>Kontakt</h4>
-          <a href="tel:+46240410210">0240-410 210</a>
-          <a href="mailto:order@bergfelds.se">order@bergfelds.se</a>
-          <a href="tel:+46240410216">Jan: 0240-410 216</a>
-          <a href="tel:+46240410217">Carin: 0240-410 217</a>
+        <div>
+          <b>Snabblänkar</b><a href="sortiment.html">Sortiment</a
+          ><a href="butiken.html">Butiken</a
+          ><a href="om-bergfelds.html">Om oss</a
+          ><a href="kontakta-oss.html">Kontakt</a>
         </div>
-        <div class="footer-col">
-          <h4>Adress</h4>
-          <a href="https://www.google.com/maps/search/?api=1&query=Gatubacken+9+771+42+Ludvika" target="_blank" rel="noreferrer">
-            Gatubacken 9<br>771 42 Ludvika
-          </a>
-          <h4 style="margin-top:20px">Följ oss</h4>
-          <a href="https://facebook.com/profile.php?id=61582548335301" target="_blank" rel="noreferrer">Facebook</a>
-          <a href="https://instagram.com/bergfelds_denlillagrossisten/" target="_blank" rel="noreferrer">Instagram</a>
-          <a href="integritetspolicy.html">Integritetspolicy</a>
+        <div>
+          <b>Öppettider</b>
+          <p>Mån–tors 07–16<br />Fredag 07–13<br />Helg stängt</p>
+        </div>
+        <div>
+          <b>Kontakt</b>
+          <p>
+            Gatubacken 9, 771 42 Ludvika<br /><a href="tel:+46240410210"
+              >0240-410 210</a
+            ><br /><a href="mailto:order@bergfelds.se">order@bergfelds.se</a>
+          </p>
+          <div class="opening-status" data-opening-status>
+            <span class="status-dot"></span
+            ><span class="status-text">Kontrollerar öppettider…</span>
+          </div>
         </div>
       </div>
-      <div class="footer-bottom">
-        <p>© <span data-year>2026</span> Bergfeld Försäljning AB · Org.nr 559516-9508</p>
-        <p>Yrkesbutik &amp; grossist i Ludvika.</p>
+      <div class="container copy">
+        © <span data-year>2026</span> Bergfeld Försäljning AB ·
+        <a href="integritetspolicy.html">Integritetspolicy</a>
       </div>
-    </div>
-  </footer>
-
-</body>
+    </footer>
+  </body>
 </html>
