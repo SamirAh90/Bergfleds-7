@@ -1,281 +1,413 @@
-const menu = document.querySelector('#menu');
-const nav = document.querySelector('.site-nav');
+'use strict';
 
-if (menu && nav) {
-  menu.addEventListener('click', () => {
-    const open = nav.classList.toggle('open');
-    menu.setAttribute('aria-expanded', String(open));
-    menu.textContent = open ? '×' : '☰';
-  });
+document.addEventListener('DOMContentLoaded', () => {
 
-  nav.addEventListener('click', () => {
-    nav.classList.remove('open');
-    menu.setAttribute('aria-expanded', 'false');
-    menu.textContent = '☰';
-  });
-}
-
-const currentPage = location.pathname.split('/').pop() || 'index.html';
-const pageSlug = currentPage.replace('.html', '').replace('index', 'home');
-document.body.classList.add(`page-${pageSlug}`);
-document.querySelectorAll('.site-nav a').forEach((link) => {
-  if (link.getAttribute('href') === currentPage) link.classList.add('active');
-});
-
-if (!document.body.classList.contains('home-page')) {
-  document.body.classList.add('inner-page');
+  /* Upgrade older page shells to the shared command-bar design. */
   const header = document.querySelector('.site-header');
   const headerInner = header?.querySelector('.header-inner');
-  const legacyPhone = header?.querySelector('.header-phone');
-  header?.classList.add('glass-header');
-  legacyPhone?.classList.add('legacy-phone');
+  const logo = header?.querySelector('.site-logo');
+  const nav = header?.querySelector('.site-nav');
+  const legacyMenu = header?.querySelector('#menu');
+  const legacyPhone = headerInner?.querySelector(':scope > .header-phone');
 
-  if (headerInner && menu) {
+  if (logo && !logo.querySelector('.logo-mark')) {
+    logo.innerHTML = '<span class="logo-mark">BERGFELDS</span><span class="logo-badge">LUDVIKA INDUSTRI</span>';
+  }
+  if (nav) {
+    nav.innerHTML = '<a href="sortiment.html">Sortiment</a><a href="sortiment.html#leverantorer">Leverantörer</a><a href="butiken.html">Butik</a><a href="kontakta-oss.html">Kontakt</a><a href="om-bergfelds.html">Om oss</a>';
+  }
+  if (legacyMenu) legacyMenu.id = 'menu-btn';
+  if (legacyPhone) legacyPhone.remove();
+  if (headerInner && !headerInner.querySelector('.header-tools')) {
     const tools = document.createElement('div');
     tools.className = 'header-tools';
-    tools.innerHTML = '<span class="store-status" data-opening-status><i></i><span>Kontrollerar öppettid</span></span><a class="header-phone modern-phone" href="tel:+46240410210">0240-410 210</a><a class="header-cta" href="index.html#snabbforfragan">Snabbförfrågan</a>';
-    headerInner.insertBefore(tools, menu);
+    tools.innerHTML = '<span class="header-status" data-opening-status><span class="status-dot"></span><span class="status-text mono-label">Kontrollerar...</span></span><a class="header-phone" href="tel:+46240410210">0240-410 210</a>';
+    headerInner.insertBefore(tools, headerInner.querySelector('#menu-btn'));
   }
 
-  const dock = document.createElement('div');
-  dock.className = 'mobile-dock';
-  dock.setAttribute('aria-label', 'Snabbval');
-  dock.innerHTML = '<a href="tel:+46240410210">Ring Bergfelds</a><a target="_blank" rel="noreferrer" href="https://www.google.com/maps/search/?api=1&query=Gatubacken+9+771+42+Ludvika">Hitta hit</a>';
-  document.body.append(dock);
-}
+  const footer = document.querySelector('.site-footer');
+  if (footer && !footer.querySelector('.footer-col')) {
+    footer.innerHTML = '<div class="container"><div class="footer-grid"><div class="footer-col"><div class="footer-logo-mark">BERGFELDS</div><p class="footer-tagline">Din personliga inköpskanal för industri, VVS och verkstad i Ludvika.</p></div><div class="footer-col"><h4>Navigation</h4><a href="index.html">Startsida</a><a href="sortiment.html">Sortiment</a><a href="butiken.html">Butiken</a><a href="om-bergfelds.html">Om Bergfelds</a><a href="du-som-kund.html">Du som kund</a><a href="kontakta-oss.html">Kontakta oss</a></div><div class="footer-col"><h4>Kontakt</h4><a href="tel:+46240410210">0240-410 210</a><a href="mailto:order@bergfelds.se">order@bergfelds.se</a><a href="tel:+46240410216">Jan: 0240-410 216</a><a href="tel:+46240410217">Carin: 0240-410 217</a></div><div class="footer-col"><h4>Adress</h4><a href="https://www.google.com/maps/search/?api=1&query=Gatubacken+9+771+42+Ludvika" target="_blank" rel="noreferrer">Gatubacken 9, 771 42 Ludvika</a><a href="integritetspolicy.html">Integritetspolicy</a></div></div><div class="footer-bottom"><p>© <span data-year></span> Bergfeld Försäljning AB · Org.nr 559516-9508</p></div></div>';
+  }
 
-document.querySelectorAll('[data-year]').forEach((element) => {
-  element.textContent = new Date().getFullYear();
-});
-
-function getStockholmTime() {
-  const parts = new Intl.DateTimeFormat('sv-SE', {
-    timeZone: 'Europe/Stockholm',
-    weekday: 'short',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false
-  }).formatToParts(new Date());
-  const values = Object.fromEntries(parts.map(({ type, value }) => [type, value]));
-  return { weekday: values.weekday, minutes: Number(values.hour) * 60 + Number(values.minute) };
-}
-
-function updateOpeningStatus() {
-  const { weekday, minutes } = getStockholmTime();
-  const weekdayKey = weekday.replace('.', '').toLowerCase();
-  const opening = { mån: [420, 960], tis: [420, 960], ons: [420, 960], tors: [420, 960], fre: [420, 780] };
-  const hours = opening[weekdayKey];
-  const open = Boolean(hours && minutes >= hours[0] && minutes < hours[1]);
-
-  document.querySelectorAll('[data-opening-status]').forEach((status) => {
-    status.classList.toggle('is-open', open);
-    status.classList.toggle('is-closed', !open);
-    const label = status.querySelector('span');
-    if (label) label.textContent = open ? 'Öppet i butiken i dag' : 'Stängt just nu';
+  /* =========================================================
+     1. DYNAMIC YEAR
+     ========================================================= */
+  document.querySelectorAll('[data-year]').forEach(el => {
+    el.textContent = new Date().getFullYear();
   });
-}
 
-updateOpeningStatus();
 
-const quickForm = document.querySelector('#snabbforfragan');
-if (quickForm) {
-  let selectedArea = 'Industri';
-  const areaButtons = quickForm.querySelectorAll('[data-area]');
+  /* =========================================================
+     2. STORE STATUS (Swedish Business Hours)
+     ========================================================= */
+  function getSwedishTime() {
+    const now = new Date();
+    const formatter = new Intl.DateTimeFormat('sv-SE', {
+      timeZone: 'Europe/Stockholm',
+      weekday: 'short',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    });
+    const parts = formatter.formatToParts(now);
+    const weekday = parts.find(p => p.type === 'weekday').value.toLowerCase(); // mån, tis, ons, tors, fre, lör, sön
+    const hour = parseInt(parts.find(p => p.type === 'hour').value, 10);
+    const minute = parseInt(parts.find(p => p.type === 'minute').value, 10);
+    const totalMinutes = hour * 60 + minute;
 
-  areaButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      areaButtons.forEach((item) => item.classList.remove('active'));
-      button.classList.add('active');
-      selectedArea = button.dataset.area;
+    const openDays = ['mån', 'tis', 'ons', 'tors'];
+    const fridayDays = ['fre'];
+
+    let isOpen = false;
+    let closeTime = '';
+
+    if (openDays.includes(weekday) && totalMinutes >= 7 * 60 && totalMinutes < 16 * 60) {
+      isOpen = true;
+      closeTime = '16:00';
+    } else if (fridayDays.includes(weekday) && totalMinutes >= 7 * 60 && totalMinutes < 13 * 60) {
+      isOpen = true;
+      closeTime = '13:00';
+    }
+
+    return { isOpen, closeTime, weekday, hour, minute };
+  }
+
+  function updateStoreStatus() {
+    const { isOpen, closeTime } = getSwedishTime();
+
+    document.querySelectorAll('[data-opening-status]').forEach(el => {
+      const dot = el.querySelector('.status-dot');
+      const text = el.querySelector('.status-text');
+      if (dot) dot.classList.toggle('open', isOpen);
+      if (text) text.textContent = isOpen ? `ÖPPET NU TILL ${closeTime}` : 'STÄNGT';
+    });
+
+    document.querySelectorAll('[data-status-short]').forEach(el => {
+      el.textContent = isOpen ? 'ÖPPET' : 'STÄNGT';
+      el.style.color = isOpen ? 'var(--green)' : 'var(--red)';
+    });
+  }
+
+  updateStoreStatus();
+  setInterval(updateStoreStatus, 30000);
+
+
+  /* =========================================================
+     3. MOBILE MENU TOGGLE
+     ========================================================= */
+  const menuBtn = document.getElementById('menu-btn');
+  const siteNav = document.querySelector('.site-nav');
+
+  if (menuBtn && siteNav) {
+    menuBtn.addEventListener('click', () => {
+      const isOpen = siteNav.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', isOpen);
+      menuBtn.textContent = isOpen ? '✕' : '☰';
+    });
+
+    // Close on nav link click
+    siteNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        siteNav.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', false);
+        menuBtn.textContent = '☰';
+      });
+    });
+
+    // Close on outside click
+    document.addEventListener('click', (e) => {
+      if (!menuBtn.contains(e.target) && !siteNav.contains(e.target)) {
+        siteNav.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', false);
+        menuBtn.textContent = '☰';
+      }
+    });
+  }
+
+
+  /* =========================================================
+     4. ACTIVE NAV LINK
+     ========================================================= */
+  const currentPage = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.site-nav a').forEach(a => {
+    const href = a.getAttribute('href');
+    if (href === currentPage || (currentPage === '' && href === 'index.html')) {
+      a.classList.add('active');
+    }
+  });
+
+
+  /* =========================================================
+     5. QUICK INQUIRY TERMINAL (Part Finder)
+     ========================================================= */
+  let selectedCategory = 'Industri & Drift';
+
+  const pills = document.querySelectorAll('.pill[data-area]');
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      pills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      selectedCategory = pill.dataset.area;
     });
   });
 
-  quickForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const message = quickForm.querySelector('#quick-message').value.trim();
-    if (!message) return;
-    const subject = encodeURIComponent(`Förfrågan – ${selectedArea}`);
-    const body = encodeURIComponent(`Område: ${selectedArea}\n\nJag söker:\n${message}\n\nNamn/företag:\nTelefon:`);
-    location.href = `mailto:order@bergfelds.se?subject=${subject}&body=${body}`;
-  });
-}
+  const terminalForm = document.getElementById('terminal-form');
+  if (terminalForm) {
+    terminalForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const msgInput = document.getElementById('terminal-message');
+      const msg = msgInput ? msgInput.value.trim() : '';
+      if (!msg) return;
 
-const categoryData = [
-  { slug: 'kullager', name: 'Kullager', icon: '◎', image: 'assets/industry.jpg', description: 'Kullager och relaterade komponenter för industrins drift och underhåll.', groups: [['Kullager', 'Kullager för olika behov inom drift och underhåll.'], ['Lagerenheter', 'Lagerenheter ingår i det verifierade sortimentsunderlaget.']] },
-  { slug: 'vvs', name: 'VVS', icon: '⌁', image: 'assets/editorial/plumbing-pipes.jpg', description: 'VVS-produkter, förbrukningsmaterial och tillbehör för professionell användning.', groups: [['VVS-produkter', 'Produkter för professionell VVS-användning.'], ['Förbrukningsmaterial', 'Förbrukningsmaterial för det dagliga arbetet.'], ['Tillbehör', 'Tillbehör inom det befintliga VVS-sortimentet.']] },
-  { slug: 'kyla', name: 'Kyla', icon: '✣', image: 'assets/plumbing.jpg', description: 'Kyla är ett av Bergfelds angivna produktområden.', groups: [] },
-  { slug: 'infastning', name: 'Infästning', icon: '⌖', image: 'assets/bergfelds-product-overview.jpg', description: 'Infästningsprodukter för professionella verksamheter och montage.', groups: [['Skruv', 'Skruv ingår i det verifierade sortimentsunderlaget.'], ['Mutter & bult', 'Mutter och bult för professionell användning.'], ['Gängstång', 'Gängstång inom produktområdet fästelement.'], ['Plugg & ankare', 'Plugg och ankare för olika montagebehov.']] },
-  { slug: 'kap-och-slip', name: 'Kap & Slip', icon: '◒', image: 'assets/editorial/workshop-tools.jpg', description: 'Produkter för kapning, slipning och skärande bearbetning.', groups: [['Klingor', 'Klingor finns angivet under skärande verktyg.'], ['Slipskivor', 'Slipskivor finns angivet under skärande verktyg.'], ['Skärande verktyg', 'Borrar, fräsar och svarvverktyg ingår i underlaget.']] },
-  { slug: 'svets', name: 'Svets', icon: '⌁', image: 'assets/editorial/cnc-workshop.jpg', description: 'Svetsutrustning, material, gas och skydd för professionellt arbete.', groups: [['Svetsutrustning', 'Utrustning för svetsarbete.'], ['Tillsatsmaterial', 'Tillsatsmaterial ingår i sortimentsunderlaget.'], ['Industrigas', 'Industrigas är angivet inom svetsning och gas.'], ['Skydd', 'Skydd för arbete inom svetsning.']] },
-  { slug: 'tatningar', name: 'Tätningar', icon: '◌', image: 'assets/industry.jpg', description: 'Tätningar är ett av Bergfelds angivna produktområden.', groups: [] },
-  { slug: 'drivremmar', name: 'Drivremmar', icon: '∞', image: 'assets/industry.jpg', description: 'Drivremmar är ett av Bergfelds angivna produktområden.', groups: [] },
-  { slug: 'verktyg', name: 'Verktyg', icon: '⌕', image: 'assets/editorial/workshop-tools.jpg', description: 'Handverktyg, elverktyg, maskiner och skärande verktyg för arbetsdagen.', groups: [['Handverktyg', 'Nycklar, tänger, hylsor, bits, sågar och verktygssatser.'], ['Elverktyg & maskiner', 'Borr, slip, sågar, skruvdragare och tillbehör.'], ['Skärande verktyg', 'Borrar, fräsar, svarvverktyg, klingor och slipskivor.']] },
-  { slug: 'tryckluft', name: 'Tryckluft', icon: '≈', image: 'assets/workshop.jpg', description: 'Kompressorer, luftverktyg och tillbehör för tryckluft.', groups: [['Kompressorer', 'Kompressorer ingår i det verifierade sortimentsunderlaget.'], ['Luftverktyg', 'Verktyg för tryckluft.'], ['Slang & tillbehör', 'Slang och tillbehör för tryckluftssystem.']] },
-  { slug: 'smorjmedel', name: 'Smörjmedel', icon: '◢', image: 'assets/industry.jpg', description: 'Smörjmedel och kemprodukter för drift, underhåll och montage.', groups: [['Oljor', 'Oljor inom smörjmedel och kem.'], ['Fett', 'Fett för underhåll och professionell användning.'], ['Avfettning', 'Avfettning ingår i det angivna sortimentet.'], ['Lim, fog & gänglåsning', 'Lim, fog och gänglåsning finns angivet i underlaget.']] },
-  { slug: 'mark-och-va', name: 'Mark & VA', icon: '⌇', image: 'assets/editorial/warehouse-logistics.jpg', description: 'Mark & VA är ett av Bergfelds angivna produktområden.', groups: [] }
-];
-
-function categoryMapMarkup() {
-  const cardPositions = [
-    ['kullager', 'left-one'], ['kap-och-slip', 'left-two'], ['svets', 'left-three'],
-    ['verktyg', 'left-four'], ['tryckluft', 'left-five'], ['vvs', 'top-center'],
-    ['kyla', 'right-one'], ['infastning', 'right-two'], ['tatningar', 'right-three'],
-    ['drivremmar', 'right-four'], ['mark-och-va', 'right-five'], ['smorjmedel', 'bottom-center']
-  ];
-  const mapIcons = {
-    'kullager': '<circle cx="16" cy="16" r="11"/><circle cx="16" cy="16" r="5"/><circle cx="16" cy="7" r="1.5"/><circle cx="16" cy="25" r="1.5"/><circle cx="7" cy="16" r="1.5"/><circle cx="25" cy="16" r="1.5"/>',
-    'vvs': '<path d="M5 10h12v6h5v4h-8v-6H5zM8 10V6h6v4M24 20v4M21 24h6"/>',
-    'kyla': '<path d="M16 3v26M5 9l22 14M27 9L5 23M12 5l4 4 4-4M12 27l4-4 4 4M5 14l5 2-5 2M27 14l-5 2 5 2"/>',
-    'infastning': '<path d="M8 5l19 19-4 4L4 9zM10 7l-4 4M15 12l-4 4M20 17l-4 4M25 22l-4 4"/>',
-    'kap-och-slip': '<circle cx="11" cy="18" r="6"/><circle cx="11" cy="18" r="2"/><path d="M16 14l9-9 2 2-9 9M19 20l9 3M20 24l6 5"/>',
-    'svets': '<path d="M7 6h14l3 13H10zM10 19v7h11v-7M4 24l-2 3M6 27l-1 3M26 24l3 2M25 28l2 2"/>',
-    'tatningar': '<ellipse cx="12" cy="17" rx="9" ry="5" transform="rotate(-25 12 17)"/><ellipse cx="21" cy="15" rx="9" ry="5" transform="rotate(25 21 15)"/>',
-    'drivremmar': '<circle cx="9" cy="21" r="5"/><circle cx="24" cy="10" r="4"/><path d="M6 17L21 7M12 25l15-12"/>',
-    'verktyg': '<path d="M5 5l8 8M19 19l8 8M10 22l-5 5M22 10l5-5M4 4l5 1 1 5-3 3M28 28l-5-1-1-5 3-3"/>',
-    'tryckluft': '<rect x="5" y="13" width="22" height="11" rx="4"/><path d="M10 13V9h8v4M22 13V7h4v6M9 24v3M23 24v3M2 17h3"/>',
-    'smorjmedel': '<path d="M5 13h18l-2 13H8zM8 13l3-6h8l4 6M24 20c4-5 6-2 4 1-1 2-3 2-4-1z"/>',
-    'mark-och-va': '<path d="M5 24h22M8 24l3-8h10l3 8M12 16l2-7h5l2 7M16 9V5M13 5h6"/>'
-  };
-  const cards = cardPositions.map(([slug, position]) => {
-    const category = categoryData.find((item) => item.slug === slug);
-    return `<a class="map-category map-category-${position}" href="${category.slug}.html"><span class="map-icon"><svg viewBox="0 0 32 32" aria-hidden="true">${mapIcons[category.slug]}</svg></span><b>${category.name}</b><span class="map-arrow" aria-hidden="true">›</span></a>`;
-  }).join('');
-  return `<div class="category-map"><svg class="map-lines" viewBox="0 0 1120 610" preserveAspectRatio="none" aria-hidden="true"><path d="M560 98V258M560 352V512M368 305H752M368 305C325 305 320 132 268 132M368 305C325 305 320 220 268 220M368 305C325 305 320 305 268 305M368 305C325 305 320 390 268 390M368 305C325 305 320 478 268 478M752 305C795 305 800 132 852 132M752 305C795 305 800 220 852 220M752 305C795 305 800 305 852 305M752 305C795 305 800 390 852 390M752 305C795 305 800 478 852 478"/></svg><div class="map-center"><img src="assets/bergfelds-wordmark.svg" alt="Bergfelds – Industri, VVS och verkstad"></div>${cards}</div>`;
-}
-
-document.querySelectorAll('[data-category-map]').forEach((container) => {
-  container.innerHTML = categoryMapMarkup();
-});
-
-if (document.body.classList.contains('page-sortiment')) {
-  const productSection = document.querySelector('.page-sortiment .page-hero + .section');
-  if (productSection) {
-    const mapSection = document.createElement('section');
-    mapSection.className = 'section category-map-directory';
-    mapSection.innerHTML = `<div class="container"><div class="catalog-heading"><em>12 PRODUKTOMRÅDEN</em><h2>Välj område och utforska vidare</h2><p>Varje område har en egen informationssida med verifierade produktgrupper och kontaktvägar.</p></div>${categoryMapMarkup()}</div>`;
-    productSection.before(mapSection);
+      const subject = encodeURIComponent(`Förfrågan – ${selectedCategory}`);
+      const body = encodeURIComponent(
+        `Hej Bergfelds,\n\nKategori: ${selectedCategory}\n\nArtikel / Beskrivning:\n${msg}\n\n---\nSkickat via bergfelds.se`
+      );
+      window.location.href = `mailto:order@bergfelds.se?subject=${subject}&body=${body}`;
+    });
   }
-}
 
-const categoryRoot = document.querySelector('[data-category-page]');
-if (categoryRoot) {
-  const slug = document.body.dataset.category;
-  const category = categoryData.find((item) => item.slug === slug);
-  if (category) {
-    document.title = `${category.name} | Bergfelds`;
-    const groupCards = category.groups.length
-      ? category.groups.map(([name, description]) => `<article class="product-group-card"><img src="${category.image}" alt="Illustrativ miljöbild för ${name}" loading="lazy"><div><h3>${name}</h3><p>${description}</p><a href="kontakta-oss.html?kategori=${encodeURIComponent(category.name)}">Fråga om ${name.toLowerCase()} →</a></div></article>`).join('')
-      : `<article class="category-pending"><span>${category.icon}</span><div><h3>Produktgrupper kompletteras</h3><p>Detaljerad och verifierad gruppindelning saknas ännu för ${category.name}. Kontakta Bergfelds så hjälper vi dig utifrån ditt behov.</p></div></article>`;
-    const related = categoryData.filter((item) => item.slug !== slug).slice(0, 4).map((item) => `<a href="${item.slug}.html"><span>${item.icon}</span>${item.name}</a>`).join('');
-    categoryRoot.innerHTML = `<section class="category-hero"><img src="${category.image}" alt="Illustrativ miljöbild för ${category.name}"><div class="category-hero-shade"></div><div class="container"><a class="category-back" href="index.html#sortimentskarta">← Till sortimentsöversikten</a><p class="kicker">PRODUKTOMRÅDE</p><h1>${category.name}</h1><p>${category.description}</p><a class="button primary" href="kontakta-oss.html?kategori=${encodeURIComponent(category.name)}">Fråga oss om ${category.name}</a></div></section><section class="section category-groups"><div class="container"><div class="section-intro"><div><p class="kicker blue">PRODUKTGRUPPER</p><h2>Utforska området.</h2></div><p>Vi visar endast produktgrupper som stöds av befintligt underlag. Bilderna är illustrativa och visar inte lagerstatus.</p></div><div class="product-group-grid">${groupCards}</div></div></section><section class="section related-categories"><div class="container"><p class="kicker blue">FLER OMRÅDEN</p><h2>Fortsätt utforska sortimentet.</h2><div class="related-grid">${related}</div></div></section><section class="category-contact"><div class="container"><div><p class="kicker">PERSONLIG HJÄLP</p><h2>Hittar du inte exakt det du söker?</h2><p>Ring eller mejla Bergfelds och beskriv behovet, artikelnumret eller användningen.</p></div><div><a class="button primary" href="tel:+46240410210">Ring 0240-410 210</a><a class="button light" href="mailto:order@bergfelds.se?subject=${encodeURIComponent(`Förfrågan – ${category.name}`)}">Mejla en förfrågan</a></div></div></section>`;
+  // Also handle standalone send button (not in form)
+  const sendBtn = document.querySelector('.send-btn');
+  if (sendBtn && !terminalForm) {
+    sendBtn.addEventListener('click', () => {
+      const msgInput = document.getElementById('terminal-message');
+      const msg = msgInput ? msgInput.value.trim() : '';
+      if (!msg) return;
+      const subject = encodeURIComponent(`Förfrågan – ${selectedCategory}`);
+      const body = encodeURIComponent(
+        `Hej Bergfelds,\n\nKategori: ${selectedCategory}\n\nArtikel / Beskrivning:\n${msg}\n\n---\nSkickat via bergfelds.se`
+      );
+      window.location.href = `mailto:order@bergfelds.se?subject=${subject}&body=${body}`;
+    });
   }
-}
 
-const suppliers = [
-  { name: 'Milwaukee', image: 'assets/suppliers/milwaukee.png', category: 'verktyg' },
-  { name: 'HiKOKI', image: 'assets/suppliers/hikoki.svg', category: 'verktyg' },
-  { name: 'Bosch Professional', image: 'assets/suppliers/bosch.svg', category: 'verktyg' },
-  { name: 'Kemppi', image: 'assets/suppliers/kemppi.svg', category: 'industri' },
-  { name: 'Kärcher', image: 'assets/suppliers/karcher.svg', category: 'verktyg' },
-  { name: 'Guide', image: 'assets/suppliers/guide.svg', category: 'skydd' },
-  { name: 'Arbesko', image: 'assets/suppliers/arbesko.svg', category: 'skydd' },
-  { name: 'Metabo', image: 'assets/suppliers/metabo.png', category: 'verktyg' },
-  { name: 'Loctite', image: 'assets/suppliers/loctite.svg', category: 'industri' },
-  { name: 'Fiskars', image: 'assets/suppliers/fiskars.png', category: 'verktyg' },
-  { name: 'SKF', image: 'assets/suppliers/skf.svg', category: 'industri' },
-  { name: 'Hultafors', image: 'assets/suppliers/hultafors.svg', category: 'verktyg' },
-  { name: 'Cederroth', image: 'assets/suppliers/cederroth.svg', category: 'skydd' },
-  { name: 'Luna', image: 'assets/suppliers/luna.png', category: 'verktyg' },
-  { name: 'Hitachi Energy', image: 'assets/logos/hitachi-energy.png', category: 'industri' },
-  { name: 'Nordic Iron', image: 'assets/logos/nordic-iron.svg', category: 'industri' },
-  { name: 'Log Max', image: 'assets/logos/logmax.png', category: 'industri' },
-  { name: 'Spendrups', image: 'assets/logos/spendrups.jpg', category: 'industri' },
-  { name: 'Dala Takentreprenader', image: 'assets/logos/dalatak.png', category: 'industri', url: 'http://dalatak.se/' },
-  { name: 'Elbolaget Montage AB', image: 'assets/logos/elbolaget.png', category: 'industri', url: 'https://elbolaget.se/' },
-  { name: 'Byggbolaget i Bergslagen AB', image: 'assets/logos/byggbolaget.png', category: 'industri', url: 'https://bygg-bolaget.se/' },
-  { name: 'Trio Perfekta', image: 'assets/logos/trio-perfekta.png', category: 'industri', url: 'https://www.trio-perfekta.se/' },
-  { name: 'LG IT AB', image: 'assets/logos/lgit.png', category: 'industri', url: 'https://lgit.se/kontakt/' },
-  { name: 'DALACC', image: 'assets/logos/dalacc.png', category: 'industri', url: 'https://www.dalacc.se/' },
-  { name: 'AKETEK', image: 'assets/logos/aketek.webp', category: 'industri', url: 'https://www.aketek.com/sv-se/' }
-];
 
-const brandGrid = document.querySelector('[data-brand-grid]');
-if (brandGrid) {
-  suppliers.slice(0, 12).forEach((supplier) => {
-    const tile = document.createElement('div');
-    tile.className = 'brand-tile';
-    tile.dataset.name = supplier.name.toLowerCase();
-    tile.dataset.category = supplier.category;
-    const image = document.createElement('img');
-    image.src = supplier.image;
-    image.alt = supplier.name;
-    image.loading = 'lazy';
-    tile.append(image);
-    brandGrid.append(tile);
-  });
-
-  const search = document.querySelector('#brand-search');
-  const filters = document.querySelectorAll('[data-filter]');
+  /* =========================================================
+     6. SUPPLIER / BRAND SEARCH & FILTER
+     ========================================================= */
+  const brandSearch = document.getElementById('brand-search');
+  const filterPills = document.querySelectorAll('.filter-pill[data-filter]');
   let activeFilter = 'all';
 
-  const filterBrands = () => {
-    const query = (search?.value || '').trim().toLowerCase();
-    brandGrid.querySelectorAll('.brand-tile').forEach((tile) => {
-      const matchesText = tile.dataset.name.includes(query);
-      const matchesFilter = activeFilter === 'all' || tile.dataset.category === activeFilter;
-      tile.hidden = !(matchesText && matchesFilter);
+  function applyBrandFilter() {
+    const query = brandSearch ? brandSearch.value.toLowerCase().trim() : '';
+    document.querySelectorAll('.brand-tile').forEach(tile => {
+      const name = (tile.dataset.name || tile.querySelector('.brand-text')?.textContent || '').toLowerCase();
+      const cat = (tile.dataset.category || '').toLowerCase();
+      const matchesFilter = activeFilter === 'all' || cat === activeFilter;
+      const matchesSearch = !query || name.includes(query);
+      tile.toggleAttribute('data-hidden', !(matchesFilter && matchesSearch));
+      tile.style.display = (matchesFilter && matchesSearch) ? '' : 'none';
     });
-  };
+  }
 
-  search?.addEventListener('input', filterBrands);
-  filters.forEach((button) => {
-    button.addEventListener('click', () => {
-      filters.forEach((item) => item.classList.remove('active'));
-      button.classList.add('active');
-      activeFilter = button.dataset.filter;
-      filterBrands();
+  if (brandSearch) {
+    brandSearch.addEventListener('input', applyBrandFilter);
+  }
+
+  filterPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      filterPills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      activeFilter = pill.dataset.filter;
+      applyBrandFilter();
     });
   });
-}
 
-const directory = document.querySelector('.supplier-directory');
-if (directory) {
-  suppliers.forEach((supplier) => {
-    const card = document.createElement(supplier.url ? 'a' : 'article');
-    card.className = 'supplier-directory-card';
-    if (supplier.url) {
-      card.href = supplier.url;
-      card.target = '_blank';
-      card.rel = 'noreferrer';
+
+  /* =========================================================
+     7. PRODUCT CATEGORY PAGES
+     ========================================================= */
+  const categoryPage = document.querySelector('[data-category-page]');
+  if (categoryPage) {
+    const categoryData = {
+      'kullager': { name: 'Kullager', image: 'assets/industry.jpg', description: 'Kullager och relaterade komponenter för industrins drift och underhåll.', groups: ['Kullager', 'Lagerenheter'] },
+      'vvs': { name: 'VVS', image: 'assets/editorial/plumbing-pipes.jpg', description: 'VVS-produkter, förbrukningsmaterial och tillbehör för professionell användning.', groups: ['VVS-produkter', 'Förbrukningsmaterial', 'Tillbehör'] },
+      'kyla': { name: 'Kyla', image: 'assets/plumbing.jpg', description: 'Kyla är ett av Bergfelds angivna produktområden.', groups: [] },
+      'infastning': { name: 'Infästning', image: 'assets/bergfelds-product-overview.jpg', description: 'Infästningsprodukter för professionella verksamheter och montage.', groups: ['Skruv', 'Mutter & bult', 'Gängstång', 'Plugg & ankare'] },
+      'kap-och-slip': { name: 'Kap & Slip', image: 'assets/editorial/workshop-tools.jpg', description: 'Produkter för kapning, slipning och skärande bearbetning.', groups: ['Klingor', 'Slipskivor', 'Skärande verktyg'] },
+      'svets': { name: 'Svets', image: 'assets/editorial/cnc-workshop.jpg', description: 'Svetsutrustning, material, gas och skydd för professionellt arbete.', groups: ['Svetsutrustning', 'Tillsatsmaterial', 'Industrigas', 'Skydd'] },
+      'tatningar': { name: 'Tätningar', image: 'assets/industry.jpg', description: 'Tätningar är ett av Bergfelds angivna produktområden.', groups: [] },
+      'drivremmar': { name: 'Drivremmar', image: 'assets/industry.jpg', description: 'Drivremmar är ett av Bergfelds angivna produktområden.', groups: [] },
+      'verktyg': { name: 'Verktyg', image: 'assets/editorial/workshop-tools.jpg', description: 'Handverktyg, elverktyg, maskiner och skärande verktyg för arbetsdagen.', groups: ['Handverktyg', 'Elverktyg & maskiner', 'Skärande verktyg'] },
+      'tryckluft': { name: 'Tryckluft', image: 'assets/workshop.jpg', description: 'Kompressorer, luftverktyg och tillbehör för tryckluft.', groups: ['Kompressorer', 'Luftverktyg', 'Slang & tillbehör'] },
+      'smorjmedel': { name: 'Smörjmedel', image: 'assets/industry.jpg', description: 'Smörjmedel och kemprodukter för drift, underhåll och montage.', groups: ['Oljor', 'Fett', 'Avfettning', 'Lim, fog & gänglåsning'] },
+      'mark-och-va': { name: 'Mark & VA', image: 'assets/editorial/warehouse-logistics.jpg', description: 'Mark & VA är ett av Bergfelds angivna produktområden.', groups: [] }
+    };
+    const slug = document.body.dataset.category;
+    const category = categoryData[slug];
+    if (category) {
+      const groups = category.groups.length
+        ? category.groups.map((group, index) => `<article class="spec-module"><span class="card-number">${String(index + 1).padStart(2, '0')}</span><h3>${group}</h3><p>Kontakta Bergfelds för tillgänglig produktinformation och rätt val för användningen.</p><a class="card-link" href="mailto:order@bergfelds.se?subject=${encodeURIComponent(`Förfrågan – ${category.name} / ${group}`)}">Fråga om ${group} →</a></article>`).join('')
+        : '<div class="category-empty"><span class="badge accent">[UNDERLAG PÅ BEGÄRAN]</span><p>Beskriv behov, dimension eller artikelnummer så hjälper Bergfelds dig vidare.</p></div>';
+      categoryPage.innerHTML = `<section class="category-tech-hero"><img src="${category.image}" alt="Illustrativ miljöbild för ${category.name}"><div class="container"><a class="category-back" href="index.html#sortimentskarta">← Sortiment</a><span class="badge accent">[PRODUKTOMRÅDE]</span><h1>${category.name}</h1><p>${category.description}</p><a class="btn btn-primary" href="mailto:order@bergfelds.se?subject=${encodeURIComponent(`Förfrågan – ${category.name}`)}">Skicka förfrågan</a></div></section><section class="section category-specs"><div class="container"><div class="section-header"><p class="section-eyebrow">// PRODUKTGRUPPER</p><h2>Teknisk översikt.</h2></div><div class="spec-grid">${groups}</div></div></section><section class="category-cta"><div class="container"><div><span class="badge">[DIREKTKONTAKT]</span><h2>Behöver du rätt komponent?</h2></div><div><a class="btn btn-primary" href="tel:+46240410210">0240-410 210</a><a class="btn btn-ghost" href="mailto:order@bergfelds.se">order@bergfelds.se</a></div></div></section>`;
     }
-    const visual = document.createElement('div');
-    visual.className = 'directory-logo';
-    const image = document.createElement('img');
-    image.src = supplier.image;
-    image.alt = supplier.name;
-    image.loading = 'lazy';
-    visual.append(image);
-    const title = document.createElement('h3');
-    title.textContent = supplier.name;
-    const text = document.createElement('p');
-    text.textContent = 'Leverantör och varumärke i Bergfelds nätverk.';
-    card.append(visual, title, text);
-    directory.append(card);
-  });
-}
+  }
 
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const revealItems = document.querySelectorAll('main > section:not(:first-child), .section-intro, .section-heading, .product-list > article, .category-catalog > article, .supplier-directory-card, .flow-grid > article, .service-editorial > article');
 
-if (!reduceMotion && 'IntersectionObserver' in window) {
-  document.documentElement.classList.add('reveal-ready');
-  revealItems.forEach((item) => item.setAttribute('data-reveal', ''));
-  const revealObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add('is-visible');
-      observer.unobserve(entry.target);
-    });
-  }, { threshold: 0.08, rootMargin: '0px 0px -40px' });
-  revealItems.forEach((item) => revealObserver.observe(item));
-}
+  /* =========================================================
+     8. SCROLL REVEAL (IntersectionObserver)
+     ========================================================= */
+  const reveals = document.querySelectorAll('[data-reveal]');
+  if (reveals.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // Inject reveal CSS
+    const style = document.createElement('style');
+    style.textContent = `.reveal-ready [data-reveal]{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}.reveal-ready [data-reveal].is-visible{opacity:1;transform:none}`;
+    document.head.appendChild(style);
+
+    document.documentElement.classList.add('reveal-ready');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(el => observer.observe(el));
+  }
+
+
+  /* =========================================================
+     8. CATEGORY MAP (Homepage) — Build dynamically
+     ========================================================= */
+  const categoryMapEl = document.querySelector('[data-category-map]');
+  if (categoryMapEl) {
+    const categories = [
+      { id: '01', name: 'Industri & Automation',    href: 'sortiment.html#industri',  desc: 'Kullager · Tätningar · Drivremmar · Smörjmedel' },
+      { id: '02', name: 'VVS & Rörsystem',           href: 'sortiment.html#vvs',       desc: 'Rördelar · Kopplingar · Ventiler · Flänsar' },
+      { id: '03', name: 'Verktyg & Maskiner',        href: 'sortiment.html#verkstad',  desc: 'Handverktyg · Kap & Slip · Svets · Elverktyg' },
+      { id: '04', name: 'Mark, VA & Förnödenheter', href: 'sortiment.html#mark-va',   desc: 'VA-komponenter · Skydd · Kem · Förbrukning' },
+    ];
+
+    categoryMapEl.innerHTML = `<div class="category-map">` +
+      categories.map(c => `
+      <a class="map-row" href="${c.href}">
+        <span class="map-num">${c.id}</span>
+        <span class="map-name">${c.name}</span>
+        <span class="map-desc">${c.desc}</span>
+        <span class="map-arrow">→</span>
+      </a>`).join('') +
+      `</div>`;
+  }
+
+
+  /* =========================================================
+     9. BRAND GRID (Homepage) — Build dynamically
+     ========================================================= */
+  const brandGridEl = document.querySelector('[data-brand-grid]');
+  if (brandGridEl) {
+    const brands = [
+      { name: 'SKF',        category: 'industri' },
+      { name: 'Milwaukee',  category: 'verktyg'  },
+      { name: 'Bosch',      category: 'verktyg'  },
+      { name: 'Kemppi',     category: 'svets'    },
+      { name: 'AGA',        category: 'svets'    },
+      { name: 'Loctite',    category: 'kem'      },
+      { name: 'Hultafors',  category: 'verktyg'  },
+      { name: 'Ejendals',   category: 'skydd'    },
+      { name: 'Teng Tools', category: 'verktyg'  },
+      { name: 'Metabo',     category: 'verktyg'  },
+      { name: 'Tyrolit',    category: 'verktyg'  },
+      { name: 'CRC',        category: 'kem'      },
+      { name: 'HiKOKI',    category: 'verktyg'  },
+      { name: 'Kärcher',    category: 'verktyg'  },
+      { name: 'Dormer',     category: 'industri' },
+      { name: 'ISCAR',      category: 'industri' },
+      { name: 'Guide',      category: 'skydd'    },
+      { name: 'Arbesko',    category: 'skydd'    },
+      { name: 'Mareld',     category: 'verktyg'  },
+      { name: 'Stanley',    category: 'verktyg'  },
+      { name: 'Habe',       category: 'industri' },
+      { name: 'Fischer',    category: 'verktyg'  },
+      { name: 'Fiskars',    category: 'verktyg'  },
+      { name: 'Sievi',      category: 'skydd'    },
+    ];
+
+    const logoMap = {
+      'SKF':        'assets/suppliers/skf.svg',
+      'Milwaukee':  'assets/suppliers/milwaukee.png',
+      'Bosch':      'assets/suppliers/bosch.svg',
+      'Kemppi':     'assets/suppliers/kemppi.svg',
+      'AGA':        'assets/suppliers/aga.svg',
+      'Loctite':    'assets/suppliers/loctite.svg',
+      'Hultafors':  'assets/suppliers/hultafors.svg',
+      'Ejendals':   'assets/suppliers/ejendals.svg',
+      'Teng Tools': 'assets/suppliers/tengtools.png',
+      'Metabo':     'assets/suppliers/metabo.png',
+      'Tyrolit':    'assets/suppliers/tyrolit.png',
+      'CRC':        'assets/suppliers/crc.svg',
+      'HiKOKI':    'assets/suppliers/hikoki.svg',
+      'Kärcher':    'assets/suppliers/karcher.svg',
+      'Dormer':     'assets/suppliers/dormer.svg',
+      'ISCAR':      'assets/suppliers/iscar.svg',
+      'Guide':      'assets/suppliers/guide.svg',
+      'Arbesko':    'assets/suppliers/arbesko.svg',
+      'Mareld':     'assets/suppliers/mareld.svg',
+      'Stanley':    'assets/suppliers/stanley.svg',
+      'Habe':       'assets/suppliers/habe.png',
+      'Fischer':    'assets/suppliers/fischer.svg',
+      'Fiskars':    'assets/suppliers/fiskars.png',
+      'Sievi':      'assets/suppliers/sievi.svg',
+    };
+
+    brandGridEl.innerHTML = brands.map(b => {
+      const logo = logoMap[b.name];
+      const inner = logo
+        ? `<img src="${logo}" alt="${b.name}" loading="lazy"><span class="brand-text">${b.name}</span>`
+        : `<span class="brand-text">${b.name}</span>`;
+      return `<div class="brand-tile" data-name="${b.name.toLowerCase()}" data-category="${b.category}">${inner}</div>`;
+    }).join('');
+  }
+
+
+  /* =========================================================
+     10. SUPPLIER DIRECTORY (sortiment.html) — Build dynamically
+     ========================================================= */
+  const supplierDirEl = document.querySelector('.supplier-directory');
+  if (supplierDirEl) {
+    const suppliers = [
+      { name: 'SKF',        img: 'assets/suppliers/skf.svg',        url: 'https://www.skf.com/se',                    category: 'Kullager & Lager'          },
+      { name: 'Milwaukee',  img: 'assets/suppliers/milwaukee.png',   url: 'https://www.milwaukeetool.eu/se',           category: 'Elverktyg'                 },
+      { name: 'Bosch',      img: 'assets/suppliers/bosch.svg',       url: 'https://www.bosch-professional.com/se/',   category: 'Elverktyg'                 },
+      { name: 'Kemppi',     img: 'assets/suppliers/kemppi.svg',      url: 'https://www.kemppi.com/sv-SE/',             category: 'Svetsutrustning'           },
+      { name: 'AGA',        img: 'assets/suppliers/aga.svg',         url: 'https://www.agagas.se/',                    category: 'Industrigas'               },
+      { name: 'Loctite',    img: 'assets/suppliers/loctite.svg',     url: 'https://www.loctite.se/',                   category: 'Kem & Lim'                 },
+      { name: 'Hultafors',  img: 'assets/suppliers/hultafors.svg',   url: 'https://www.hultafors.com/se/',             category: 'Handverktyg'               },
+      { name: 'Ejendals',   img: 'assets/suppliers/ejendals.svg',    url: 'https://www.ejendals.com/se/',              category: 'Skyddsutrustning'          },
+      { name: 'Teng Tools', img: 'assets/suppliers/tengtools.png',   url: 'https://www.tengtools.com/se/',             category: 'Handverktyg'               },
+      { name: 'Metabo',     img: 'assets/suppliers/metabo.png',      url: 'https://www.metabo.com/se/',                category: 'Elverktyg'                 },
+      { name: 'Tyrolit',    img: 'assets/suppliers/tyrolit.png',     url: 'https://www.tyrolit.com/se/',               category: 'Slipverktyg'               },
+      { name: 'CRC',        img: 'assets/suppliers/crc.svg',         url: 'https://www.crcind.com/',                   category: 'Teknisk Spray & Kem'       },
+      { name: 'HiKOKI',    img: 'assets/suppliers/hikoki.svg',      url: 'https://www.hikoki-powertools.se/',         category: 'Elverktyg'                 },
+      { name: 'Kärcher',    img: 'assets/suppliers/karcher.svg',     url: 'https://www.karcher.com/se/',               category: 'Rengöringsutrustning'      },
+      { name: 'Dormer',     img: 'assets/suppliers/dormer.svg',      url: 'https://www.dormerpramet.com/sv-SE/',       category: 'Skärande Verktyg'          },
+      { name: 'ISCAR',      img: 'assets/suppliers/iscar.svg',       url: 'https://www.iscar.com/',                    category: 'Skärande Verktyg'          },
+      { name: 'Guide',      img: 'assets/suppliers/guide.svg',       url: 'https://www.guidegloves.se/',               category: 'Skyddshandskar'            },
+      { name: 'Arbesko',    img: 'assets/suppliers/arbesko.svg',     url: 'https://www.arbesko.se/',                   category: 'Skyddsskor'                },
+      { name: 'Mareld',     img: 'assets/suppliers/mareld.svg',      url: 'https://www.mareld.se/',                    category: 'Belysning'                 },
+      { name: 'Stanley',    img: 'assets/suppliers/stanley.svg',     url: 'https://www.stanleytools.se/',              category: 'Handverktyg'               },
+      { name: 'Habe',       img: 'assets/suppliers/habe.png',        url: null,                                        category: 'Tekniska Produkter'        },
+      { name: 'Fischer',    img: 'assets/suppliers/fischer.svg',     url: 'https://www.fischer.se/',                   category: 'Infästning'                },
+      { name: 'Fiskars',    img: 'assets/suppliers/fiskars.png',     url: 'https://www.fiskars.se/',                   category: 'Handverktyg'               },
+      { name: 'Sievi',      img: 'assets/suppliers/sievi.svg',       url: 'https://www.sievi.com/se/',                 category: 'Skyddsskor'                },
+      { name: 'Portwest',   img: 'assets/suppliers/portwest.png',    url: 'https://www.portwest.com/se/',              category: 'Skyddskläder'              },
+      { name: 'Cederroth',  img: 'assets/suppliers/cederroth.svg',   url: 'https://www.cederroth.se/',                 category: 'Första Hjälpen & Kem'      },
+    ];
+
+    supplierDirEl.innerHTML = suppliers.map(s => {
+      const Tag = s.url ? 'a' : 'div';
+      const attrs = s.url ? `href="${s.url}" target="_blank" rel="noreferrer"` : '';
+      const categoryText = s.category.toLowerCase();
+      const filterCategory = /svets|gas/.test(categoryText) ? 'svets' : /skydd|sko|kläd|hjälp/.test(categoryText) ? 'skydd' : /kem|lim|spray/.test(categoryText) ? 'kem' : /lager|tekniska/.test(categoryText) ? 'industri' : 'verktyg';
+      return `<${Tag} class="supplier-directory-card brand-tile" data-name="${s.name.toLowerCase()}" data-category="${filterCategory}" ${attrs}>
+      <div class="directory-logo"><img src="${s.img}" alt="${s.name}" loading="lazy"></div>
+      <h3>${s.name}</h3>
+      <span>${s.category}</span>
+    </${Tag}>`;
+    }).join('');
+  }
+
+}); // end DOMContentLoaded
