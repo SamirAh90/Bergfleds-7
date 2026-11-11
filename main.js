@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const legacyPhone = headerInner?.querySelector(':scope > .header-phone');
 
   if (logo && !logo.querySelector('.logo-mark')) {
-    logo.innerHTML = '<span class="logo-mark">BERGFELDS</span><span class="logo-badge">LUDVIKA INDUSTRI</span>';
+    logo.innerHTML = '<img src="assets/bergfelds-wordmark.svg" alt="Bergfelds – Din inköpskanal">';
   }
   if (nav) {
     nav.innerHTML = '<a href="sortiment.html">Sortiment</a><a href="sortiment.html#leverantorer">Leverantörer</a><a href="butiken.html">Butik</a><a href="kontakta-oss.html">Kontakt</a><a href="om-bergfelds.html">Om oss</a>';
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const footer = document.querySelector('.site-footer');
   if (footer && !footer.querySelector('.footer-col')) {
-    footer.innerHTML = '<div class="container"><div class="footer-grid"><div class="footer-col"><div class="footer-logo-mark">BERGFELDS</div><p class="footer-tagline">Din personliga inköpskanal för industri, VVS och verkstad i Ludvika.</p></div><div class="footer-col"><h4>Navigation</h4><a href="index.html">Startsida</a><a href="sortiment.html">Sortiment</a><a href="butiken.html">Butiken</a><a href="om-bergfelds.html">Om Bergfelds</a><a href="du-som-kund.html">Du som kund</a><a href="kontakta-oss.html">Kontakta oss</a></div><div class="footer-col"><h4>Kontakt</h4><a href="tel:+46240410210">0240-410 210</a><a href="mailto:order@bergfelds.se">order@bergfelds.se</a><a href="tel:+46240410216">Jan: 0240-410 216</a><a href="tel:+46240410217">Carin: 0240-410 217</a></div><div class="footer-col"><h4>Adress</h4><a href="https://www.google.com/maps/search/?api=1&query=Gatubacken+9+771+42+Ludvika" target="_blank" rel="noreferrer">Gatubacken 9, 771 42 Ludvika</a><a href="integritetspolicy.html">Integritetspolicy</a></div></div><div class="footer-bottom"><p>© <span data-year></span> Bergfeld Försäljning AB · Org.nr 559516-9508</p></div></div>';
+    footer.innerHTML = '<div class="container"><div class="footer-grid"><div class="footer-col"><img class="footer-real-logo" src="assets/bergfelds-wordmark.svg" alt="Bergfelds – Din inköpskanal"><p class="footer-tagline">Din personliga inköpskanal för industri, VVS och verkstad i Ludvika.</p></div><div class="footer-col"><h4>Navigation</h4><a href="index.html">Startsida</a><a href="sortiment.html">Sortiment</a><a href="butiken.html">Butiken</a><a href="om-bergfelds.html">Om Bergfelds</a><a href="du-som-kund.html">Du som kund</a><a href="kontakta-oss.html">Kontakta oss</a></div><div class="footer-col"><h4>Kontakt</h4><a href="tel:+46240410210">0240-410 210</a><a href="mailto:order@bergfelds.se">order@bergfelds.se</a><a href="tel:+46240410216">Jan: 0240-410 216</a><a href="tel:+46240410217">Carin: 0240-410 217</a></div><div class="footer-col"><h4>Adress</h4><a href="https://www.google.com/maps/search/?api=1&query=Gatubacken+9+771+42+Ludvika" target="_blank" rel="noreferrer">Gatubacken 9, 771 42 Ludvika</a><a href="integritetspolicy.html">Integritetspolicy</a></div></div><div class="footer-bottom"><p>© <span data-year></span> Bergfeld Försäljning AB · Org.nr 559516-9508</p></div></div>';
   }
 
   /* =========================================================
